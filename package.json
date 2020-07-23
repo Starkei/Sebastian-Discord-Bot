@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test" : "npm run build && npx jest",
+    "test": "npm run build && npx jest",
     "build": "tsc",
     "dev": "node -r ts-node/register ./src/server/index.ts",
     "dev:watch": "npx nodemon",

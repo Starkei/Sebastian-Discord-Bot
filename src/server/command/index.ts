@@ -1,3 +1,7 @@
+export {ICommand} from "./ICommand"
+export {GetCurrentMatchCommand} from "./lol/GetCurrentMatchCommand"
+export {CommandBuilder} from "./CommandBuilder"
+
 export interface IParsedCommand{
     name: string;
     params: string[];
