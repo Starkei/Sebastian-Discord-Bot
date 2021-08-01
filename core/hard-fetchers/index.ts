@@ -1,5 +1,5 @@
+import { ChannelNotFoundError } from "@sebastian/errors";
 import { Client, DMChannel, NewsChannel, TextChannel } from "discord.js";
-import { ChannelNotFoundError } from "../../errors";
 import { hardMapFromChannel } from "../hard-mappers";
 
 export async function hardTextChannelFromClientById(

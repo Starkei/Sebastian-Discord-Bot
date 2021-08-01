@@ -1,8 +1,8 @@
 import { v4 as uuid } from "uuid";
 import { Client, DMChannel, NewsChannel, TextChannel } from "discord.js";
-import { hardTextChannelFromClientById } from "../../../core";
 import { IFeature } from "../../../core/interfaces";
 import { OnStartupGreetingConfig } from "../types";
+import { hardTextChannelFromClientById } from "@sebastian/hard-fetchers";
 
 export class StartupGreeting implements IFeature {
   private readonly channelPromise: Promise<TextChannel | DMChannel | NewsChannel>;

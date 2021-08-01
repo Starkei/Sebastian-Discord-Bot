@@ -1,6 +1,7 @@
 import { Client, DMChannel, MessageReaction, NewsChannel, TextChannel } from "discord.js";
-import { IFeature } from "../../../core/interfaces";
-import { hardTextChannelFromClientById, Sebastian } from "../../../core";
+import { hardTextChannelFromClientById } from "@sebastian/hard-fetchers";
+import { IFeature } from "@sebastian/interfaces";
+import { Sebastian } from "@sebastian/packages/sebastian";
 import { SexualContextMoverConfig } from "../types";
 
 export class SexualContextMover implements IFeature {

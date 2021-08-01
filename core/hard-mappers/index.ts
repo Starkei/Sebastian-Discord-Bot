@@ -1,5 +1,5 @@
+import { InvalidChannelTypeError } from "@sebastian/errors";
 import { Channel, DMChannel, NewsChannel, TextChannel } from "discord.js";
-import { InvalidChannelTypeError } from "../../errors";
 
 export function hardMapFromChannel(channel: Channel): TextChannel | DMChannel | NewsChannel {
   if (channel.isText()) {
