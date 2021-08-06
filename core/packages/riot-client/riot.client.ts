@@ -3,10 +3,17 @@ import { SummonerQueries, SummonerQueriesConfig } from "./summoner-queries";
 import { RiotClientConfig, RiotHttpClientConfig } from "./types";
 
 export class RiotClient {
+  private readonly httpClient: RiotHttpClient;
+
   public readonly summonerQueries: SummonerQueries;
+
   constructor(config: RiotClientConfig) {
-    const httpClient = new RiotHttpClient(mapToRiotHttpClientConfig(config));
-    this.summonerQueries = new SummonerQueries(httpClient, mapToSummonerQueryConfig(config));
+    this.httpClient = new RiotHttpClient(mapToRiotHttpClientConfig(config));
+    this.summonerQueries = new SummonerQueries(this.httpClient, mapToSummonerQueryConfig(config));
+  }
+
+  public verifyApiToken() {
+    return this.httpClient.verifySession();
   }
 }
 
@@ -14,6 +21,7 @@ function mapToRiotHttpClientConfig(config: RiotClientConfig): RiotHttpClientConf
   return {
     apiToken: config.apiToken,
     baseUrl: config.apiBaseUrl,
+    verificationUrl: config.verificationUrl,
   };
 }
 

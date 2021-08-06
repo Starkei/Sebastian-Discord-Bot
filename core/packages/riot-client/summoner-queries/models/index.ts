@@ -9,7 +9,8 @@ import {
   ValidateNested,
 } from "class-validator";
 import "reflect-metadata";
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
+import { mapToArabic } from "../mappers/roman-to-arabic";
 
 export class ByUserNameDto {
   @IsString()
@@ -22,9 +23,10 @@ export class SummonerDto {
   @IsNotEmpty()
   tier!: string;
 
-  @IsString()
+  @Transform(({ value }) => mapToArabic(value), { toClassOnly: true })
+  @IsNumber()
   @IsNotEmpty()
-  rank!: string;
+  rank!: number;
 
   @IsNumber()
   @IsNotEmpty()

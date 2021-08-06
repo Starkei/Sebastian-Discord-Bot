@@ -10,6 +10,9 @@ export function collectRiotClientConfig(): RiotClientConfig {
   const apiToken: string = String(process.env.RIOT_TOKEN);
   assert(apiToken !== "undefined", "Api token is not defined");
 
+  const verificationUrl: string = String(process.env.VERIFICATION_URL);
+  assert(verificationUrl !== "undefined", "Verification url is not defined");
+
   const getEncryptedUserIdByUserNameEndpoint: string = String(process.env.GET_ENCRYPTED_USER_ID_BY_USER_NAME_ENDPOINT);
   assert(
     getEncryptedUserIdByUserNameEndpoint !== "undefined",
@@ -22,6 +25,7 @@ export function collectRiotClientConfig(): RiotClientConfig {
   return {
     apiBaseUrl,
     apiToken,
+    verificationUrl,
     getEncryptedUserIdByUserNameEndpoint,
     getUserLPbyEncryptedUserId,
   };
