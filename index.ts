@@ -7,13 +7,12 @@ import { Sebastian } from "@sebastian/packages/sebastian";
 import {
   collectMongoDbConfig,
   collectOnStartupGreetingConfig,
-  collectRiotClientConfig,
   collectSexualContextMoverConfig,
 } from "./config-collect-methods";
 import { SexualContextMover, StartupGreeting } from "./features";
 import { GetStatus } from "./features/get-status/src/get.status";
 import { MongoDBClient } from "@sebastian/packages/mongodb-client";
-import { RiotClient } from "@sebastian/packages/riot-client";
+import { CronJobClient } from "@sebastian/packages/cron-job-client/cron.job.client";
 
 config({ path: resolve(".env") });
 
@@ -25,7 +24,18 @@ assert(!Number.isFinite(port), "Port is not defined");
 
 async function startApp() {
   const client = new Client();
+
+  const mongoDbClient = new MongoDBClient(collectMongoDbConfig());
+
   await client.login(discordClientSecret);
+
+  await mongoDbClient.connect();
+
+  const cronJobClient = new CronJobClient(mongoDbClient);
+  //cronJobClient.register("TestManager", manager, {});
+
+  cronJobClient.restore();
+
   const features = new FeatureFactory([
     new SexualContextMover(new Sebastian(), client, collectSexualContextMoverConfig()),
     new StartupGreeting(client, collectOnStartupGreetingConfig()),

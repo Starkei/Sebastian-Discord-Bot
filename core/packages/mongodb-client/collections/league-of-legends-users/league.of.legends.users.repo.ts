@@ -1,10 +1,10 @@
 import { Exception } from "@sebastian/errors";
-import { LeagueOfLegendsUser, LeagueOfLegendsUserModel } from "./models";
+import { LeagueOfLegendsUserEntity, LeagueOfLegendsUserModel } from "./models";
 
 export class LeagueOfLegendsUsersRepo {
   constructor() {}
 
-  public createUser(user: LeagueOfLegendsUser) {
+  public createUser(user: LeagueOfLegendsUserEntity) {
     const createdUser = new LeagueOfLegendsUserModel(user);
     return createdUser.save();
   }
@@ -13,7 +13,7 @@ export class LeagueOfLegendsUsersRepo {
     throw new Error("Not implemented yet");
   }
 
-  public async updateUser(userName: string, newUser: Partial<LeagueOfLegendsUser>) {
+  public async updateUser(userName: string, newUser: Partial<LeagueOfLegendsUserEntity>) {
     const doc = await LeagueOfLegendsUserModel.findOne({ username: userName });
     if (!doc) {
       // TODO: Add exception user not found
@@ -22,7 +22,7 @@ export class LeagueOfLegendsUsersRepo {
     return doc.update(newUser);
   }
 
-  public async getUser(userName: string): Promise<LeagueOfLegendsUser> {
+  public async getUser(userName: string): Promise<LeagueOfLegendsUserEntity> {
     const doc = await LeagueOfLegendsUserModel.findOne({ username: userName });
     if (!doc) {
       // TODO: Add exception user not found
