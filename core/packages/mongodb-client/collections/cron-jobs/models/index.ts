@@ -1,4 +1,4 @@
-import { model, Schema, isValidObjectId } from "mongoose";
+import { model, Schema } from "mongoose";
 import { CronJobDependencies } from "@sebastian/packages/cron-job-client/types";
 
 export interface CronJobEntity {

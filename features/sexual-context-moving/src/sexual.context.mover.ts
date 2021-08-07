@@ -32,7 +32,7 @@ export class SexualContextMover implements IFeature {
     const content = reaction.message.content;
     const authorName = reaction.message.author.username;
     const attachments = Array.from(reaction.message.attachments.values());
-    const sebastianDirectSpeech = this.sebastian.directSpeech.makeDirectSpeech(authorName, content).complete();
+    const sebastianDirectSpeech = this.sebastian.directSpeech.makeQuote(authorName, content).complete();
     const sebastianApologize = this.sebastian.politenessSpeech.makeActionMorePolite("переместить это").complete();
     const apologizeMessage = await reaction.message.channel.send(sebastianApologize);
     setTimeout(async () => {

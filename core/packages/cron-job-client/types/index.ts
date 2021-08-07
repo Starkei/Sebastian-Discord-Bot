@@ -11,14 +11,18 @@ export interface ICronJob {
 }
 
 export type CronJobDependencies = {
-  infinity: boolean;
-  time: number | Date;
   [key: string]: number | string | boolean | Date;
 };
 
-export type CronJobScheduleConfig = {
-  infinity: boolean;
-  time: number | Date;
-  managerName: string;
-  callback: ICronJobCallback;
-};
+export type CronJobScheduleConfig =
+  | {
+      infinity: false;
+      timeInMs: number;
+      callback: ICronJobCallback;
+      jobId: string;
+    }
+  | {
+      infinity: true;
+      timeInMs: number;
+      callback: ICronJobCallback;
+    };

@@ -1,33 +1,33 @@
 import { Exception } from "@sebastian/errors";
+import { doEither } from "@sebastian/packages/eithers";
+import { AsyncEither } from "@sebastian/types";
+import { Right } from "monet";
+import { FilterQuery } from "mongoose";
+import { CommonRepo } from "../common.repo";
+import { LolUserAlreadyExistsError, LolUserNotFoundError } from "./errors";
 import { LeagueOfLegendsUserEntity, LeagueOfLegendsUserModel } from "./models";
 
-export class LeagueOfLegendsUsersRepo {
-  constructor() {}
-
-  public createUser(user: LeagueOfLegendsUserEntity) {
-    const createdUser = new LeagueOfLegendsUserModel(user);
-    return createdUser.save();
+export class LeagueOfLegendsUsersRepo extends CommonRepo<
+  LeagueOfLegendsUserEntity,
+  LolUserNotFoundError,
+  LolUserAlreadyExistsError
+> {
+  constructor() {
+    super(LeagueOfLegendsUserModel);
   }
 
-  public deleteUser(userName: string) {
-    throw new Error("Not implemented yet");
+  public async getLpByEncryptedUserId(encryptedUsername: string): AsyncEither<LolUserNotFoundError, number> {
+    return doEither(async (run) => {
+      const user = run(await this.get({ encryptedUsername: encryptedUsername }));
+      return Right(user.lp);
+    });
   }
 
-  public async updateUser(userName: string, newUser: Partial<LeagueOfLegendsUserEntity>) {
-    const doc = await LeagueOfLegendsUserModel.findOne({ username: userName });
-    if (!doc) {
-      // TODO: Add exception user not found
-      return Exception("User not found");
-    }
-    return doc.update(newUser);
+  protected makeNotFoundError(filter?: FilterQuery<LeagueOfLegendsUserEntity>): LolUserNotFoundError {
+    return new LolUserNotFoundError(filter);
   }
 
-  public async getUser(userName: string): Promise<LeagueOfLegendsUserEntity> {
-    const doc = await LeagueOfLegendsUserModel.findOne({ username: userName });
-    if (!doc) {
-      // TODO: Add exception user not found
-      return Exception("User not found");
-    }
-    return doc;
+  protected makeAlreadyExistsError(entity: Omit<LeagueOfLegendsUserEntity, "_id">): LolUserAlreadyExistsError {
+    return new LolUserAlreadyExistsError(entity);
   }
 }

@@ -3,7 +3,7 @@ import { Left, Right } from "monet";
 import { FilterQuery, Model } from "mongoose";
 
 export abstract class CommonRepo<T, NotFoundError extends Error, AlreadyExistsError extends Error> {
-  constructor(private readonly model: Model<T>) {}
+  constructor(protected readonly model: Model<T>) {}
 
   public async getAll(): Promise<T[]> {
     const result = await this.model.find();
