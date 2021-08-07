@@ -1,7 +1,9 @@
-import { RiotClientConfig } from "@sebastian/packages/riot-client";
 import { assert } from "console";
+import { RiotClientConfig } from "@sebastian/packages/riot-client";
 import { OnStartupGreetingConfig } from "../features/on-startup-greeting";
 import { SexualContextMoverConfig } from "../features/sexual-context-moving";
+
+export { collectMongoDbConfig } from "./collect-mongodb-config";
 
 export function collectRiotClientConfig(): RiotClientConfig {
   const apiBaseUrl: string = String(process.env.RIOT_API_BASE_URL);

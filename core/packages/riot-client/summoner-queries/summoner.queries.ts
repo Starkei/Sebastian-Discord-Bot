@@ -9,13 +9,14 @@ import { RiotHttpClient } from "../riot.http.client";
 export class SummonerQueries {
   private readonly tierMap: Map<string, number> = new Map();
   private readonly maxLpPerRank: number;
+  private readonly tiersCount: number;
 
   constructor(private readonly httpClient: RiotHttpClient, private readonly config: SummonerQueriesConfig) {
     this.maxLpPerRank = 100;
-    const tiersCount = 4;
+    this.tiersCount = 4;
     const rankNames = ["iron", "bronze", "gold", "platinum", "diamond", "master", "grandmaster", "challenger"];
     this.tierMap = rankNames.reduce<Map<string, number>>(
-      (map, rankName, index) => map.set(rankName, this.maxLpPerRank * index * tiersCount),
+      (map, rankName, index) => map.set(rankName, this.maxLpPerRank * index * this.tiersCount),
       new Map()
     );
   }
@@ -38,7 +39,7 @@ export class SummonerQueries {
       if (!tierLps) {
         return Exception(`Wrong rank name`);
       }
-      const rankLps = this.maxLpPerRank * data.rank;
+      const rankLps = this.maxLpPerRank * (this.tiersCount - data.rank);
       const totalLps = data.lp + rankLps + tierLps;
       return totalLps;
     });
