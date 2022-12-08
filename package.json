@@ -28,7 +28,7 @@
     "class-validator": "0.13.1",
     "discord.js": "12.5.3",
     "dotenv": "10.0.0",
-    "express": "4.17.1",
+    "express": "4.18.2",
     "monet": "0.9.2",
     "mongoose": "5.13.5",
     "reflect-metadata": "0.1.13",
